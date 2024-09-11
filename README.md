@@ -1,6 +1,8 @@
 # SecureData DApp - E-Identity and Data Verification
 
 - **Backend Repo Link**: https://github.com/bytebenders1/backendnew
+- **Live Link**: https://secure-data.on-fleek.app
+- **Demo Link**: https://www.loom.com/share/2c0f70dadec84b0b9eb70f87e23bfb7c?sid=db32d20b-982a-4f59-81b7-449243e7cf19
 
 ## Project Overview
 
