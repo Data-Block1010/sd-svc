@@ -1,5 +1,7 @@
 # SecureData DApp - E-Identity and Data Verification
 
+- **Backend Repo Link**: https://github.com/bytebenders1/backendnew
+
 ## Project Overview
 
 SecureData DApp is a decentralized application (DApp) built using Next.js and Shadcn, designed for secure e-identity management and data verification. This DApp empowers users to securely store, verify, and manage their identity documents and sensitive data in a decentralized, user-controlled environment. Utilizing blockchain technology, Zero-Knowledge (zk) proofs, and Lisk Layer 2 (L2) networks, SecureData ensures enhanced privacy, security, and autonomy over users' data.
