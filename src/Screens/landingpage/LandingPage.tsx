@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+import { Star } from "lucide-react";
+
 function LandingPage() {
   const perks = [
     {
@@ -56,89 +58,107 @@ function LandingPage() {
       <div>
         <div className="bg-[#00140F] p-5 sm:flex-col-1">
           <Nav />
-          <div className=" bg-[#065646] my-10 flex justify-between lg:w-11/12 !mx-auto py-12 ml-5 rounded-lg sm:flex-col-1 ">
-            <div className="flex justify-center px-12">
-              <div className="flex flex-col justify-center">
-                <h1 className="text-white  justify-center text-xl md:text-3xl lg:text-6xl mt-5 font-bold lg:w-[600px] ">
+
+          {/* Hero section */}
+
+          <div className="bg-[#065646] my-10 mx-auto w-11/12 py-12 rounded-lg">
+            <div className="flex flex-col lg:flex-row justify-between items-center px-4 lg:pl-12 lg:pr-0">
+              <div className="flex flex-col justify-center mb-8 lg:mb-0 lg:w-1/2">
+                <h1 className="text-white text-center lg:text-left text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold">
                   <span className="text-[#26FCD1]">Secure</span> Your Data,{" "}
-                  Protect Your Privacy.
+                  <span className="block mt-2">Protect Your Privacy.</span>
                 </h1>
-                <p className="text-white text-sm lg:text-base lg:mt-8">
-                  Experience the Future of Data Management with <br />{" "}
-                  Zero-Knowledge Proofs
+                <p className="text-white text-sm md:text-base mt-4 lg:mt-8 text-center lg:text-left">
+                  Experience the Future of Data Management with
+                  <br className="hidden md:inline" /> Zero-Knowledge Proofs
                 </p>
-                {/* <div className="flex gap-3 mt-5 mr-5 justify-end">
-                  <Input placeholder="Enter your email" />
-                  <Button className="h-11">Get Started</Button>
-                </div> */}
-                <p className="text-white text-sm mt-3">
+                {/* Uncomment and adjust as needed
+                <div className="flex flex-col sm:flex-row gap-3 mt-5 justify-center lg:justify-start">
+                  <Input placeholder="Enter your email" className="w-full sm:w-auto" />
+                  <Button className="h-11 w-full sm:w-auto mt-3 sm:mt-0">Get Started</Button>
+                </div>
+                */}
+                <p className="text-white text-xs md:text-sm mt-3 text-center lg:text-left">
                   We care about your data in our{" "}
-                  <a href="" className="underline-offset-1">
+                  <a href="" className="underline">
                     privacy policy.
                   </a>
                 </p>
               </div>
-            </div>
-            <div className="flex justify-start">
-              <Image src="/hero.svg" height={500} width={500} alt="hero" />
+              <div className="flex justify-center lg:justify-end lg:w-1/2">
+                <Image
+                  src="/hero.svg"
+                  height={500}
+                  width={500}
+                  alt="hero"
+                  className="w-full max-w-[300px] md:max-w-[400px] lg:max-w-[500px]"
+                />
+              </div>
             </div>
           </div>
-          <div className="p-8">
-            <h1 className="text-white">Features</h1>
-            <h1 className="lg:text-3xl text-xl text-white font-bold">
+
+          {/* Features section */}
+          <div className="max-w-[95%] mx-auto p-4 sm:p-8">
+            <h1 className="text-white text-lg sm:text-xl">Features</h1>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-white font-bold mt-2">
               Why Choose SecureData?
             </h1>
-            <p className="text-white mt-1 w-5/12">
+            <p className="text-white mt-2 w-full sm:w-3/4 md:w-2/3 lg:w-5/12 text-sm sm:text-base">
               SecureData is designed to handle a wide range of personal and
               professional information securely.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-0 bg-[#00140F] mt-8">
+          <div className=" max-w-[95%] mx-auto grid grid-cols-1 gap-y-8 sm:gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 lg:gap-x-8 bg-[#00140F] mt-4 sm:mt-8 px-4 sm:px-8 pb-20">
             {perks.map((perk) => (
-              <div
-                key={perk.name}
-                className="text-center md:flex md:items-start md:text-left lg:block lg:text-center"
-              >
-                <div className="md:flex shrink-8 flex justify-center">
-                  <div className="h-16 w-16 items-center flex justify-center rounded-full">
+              <div key={perk.name}>
+                <div className="flex-shrink-0 mb-4">
+                  <div className="h-12 w-12 sm:h-16 sm:w-16 flex items-center justify-center rounded-full">
                     {perk.icon}
                   </div>
                 </div>
-                <div className="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
-                  <h3 className="text-base font-bold text-white">
+                <div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white">
                     {perk.name}
                   </h3>
-                  <p className="mt-3 text-sm text-muted-foreground text-white">
-                    {perk.description}
-                  </p>
+                  <p className="mt-2 text-sm text-white">{perk.description}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <section className="bg-[#04483A] lg:px-20 mx-auto lg:flex !items-center !justify-center gap-10 lg:gap-20 p-10">
-          <div className="flex justify-center ">
+
+        {/* Testimonial section */}
+        <section className="bg-[#04483A] px-4 sm:px-6 lg:px-20 mx-auto flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-20 py-10">
+          <div className="flex justify-start w-full lg:w-auto">
             <Image
               src="/ma.svg"
               height={350}
               width={350}
               alt="ma"
-              className="shrink-0"
+              className="shrink-0 w-full max-w-[250px] sm:max-w-[300px] lg:max-w-[350px]"
             />
           </div>
-          <div className="w-7/12">
-            <div className=" ">
-              <h1 className="lg:text-3xl text-bold text-white font-Inter">
-                “The integration with government services has made my work so
+          <div className="w-full lg:w-7/12">
+            <div className="flex space-x-2">
+              <Star className="text-yellow-200 " fill="yellow" />
+              <Star className="text-yellow-200 " fill="yellow" />
+              <Star className="text-yellow-200 " fill="yellow" />
+              <Star className="text-yellow-200 " fill="yellow" />
+              <Star className="text-yellow-200 " fill="yellow" />
+            </div>
+            <div className="text-left">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white font-Inter">
+                The integration with government services has made my work so
                 much easier. I can securely share verified documents with just a
-                few clicks.”
+                few clicks.
               </h1>
-              <h1 className="text-white font-bold mt-3">Jane D</h1>
+              <h2 className="text-white font-bold mt-4 text-lg">- Jane D</h2>
               <p className="text-white text-sm">Financial Analyst</p>
             </div>
           </div>
         </section>
 
+        {/* FAQ section */}
         <section className="bg-[#101a1f] text-white py-16 px-6">
           <div className="max-w-7xl mx-auto">
             <div className="mb-8">
@@ -146,8 +166,9 @@ function LandingPage() {
                 Frequently asked questions
               </h1>
               <p className="text-[#cfcfcf]">
-                Everything you need to know about the product and billing. Can’t
-                find the answer <br /> you&apos;re looking for? Please{" "}
+                Everything you need to know about the product and billing.
+                Can&apos;t find the answer <br /> you&apos;re looking for?
+                Please{" "}
                 <a href="#" className="text-[#6fcf97] hover:underline">
                   chat to our friendly team
                 </a>
@@ -248,36 +269,53 @@ function LandingPage() {
             </div>
           </div>
         </section>
-        <section className="bg-[#04483A] p-10 flex flex-col-1  justify-center">
-          <div className="bg-white lg:flex p-10 rounded-lg flex flex-col-1">
-            <div className="mt-5">
-              <h1 className="lg:text-4xl text-2xl font-bold">
-                Ready to take control of
-                <br /> your data?
-              </h1>
-              <p className="mt-10 text-gray-700 text-xl">
-                Whether you’re protecting personal documents or <br /> managing
-                sensitive business information, <br />
-                SecureData is the trusted solution for secure data <br />{" "}
-                management.
-              </p>
-              <div className="mt-10 space-x-5">
-                <Button variant={"ghost"}>Learn More</Button>
-                <Button>Get Started</Button>
+
+        {/* Editorial section */}
+        <section className="bg-[#04483A] p-4 py-10 sm:p-6 md:p-10 flex justify-center">
+          <div className="bg-[#F9FAFB] rounded-lg p-6 sm:p-8 md:p-10 w-full max-w-7xl">
+            <div className="flex flex-col lg:flex-row items-start">
+              <div className="w-full lg:w-1/2 mb-6 lg:mb-0 lg:pr-8 lg:mt-10">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-left">
+                  Ready to take control of your data?
+                </h1>
+                <p className="mt-4 sm:mt-6 text-gray-700 text-base sm:text-lg lg:text-xl text-left">
+                  Whether you&apos;re protecting personal documents or managing
+                  sensitive business information, SecureData is the trusted
+                  solution for secure data management.
+                </p>
+                <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                  <Button
+                    variant="ghost"
+                    className="w-full sm:w-auto border border-secondary bg-white"
+                  >
+                    Learn More
+                  </Button>
+                  <Button className="w-full sm:w-auto">Get Started</Button>
+                </div>
               </div>
-            </div>
-            <div className="mb-0 flex align-bottom">
-              <Image src="mock.svg" height={600} width={600} alt="mock" />
+              <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mt-6 lg:mt-0">
+                <Image
+                  src="/mock.svg"
+                  height={600}
+                  width={600}
+                  alt="mock"
+                  className="w-full max-w-[400px] lg:max-w-[600px] object-contain"
+                />
+              </div>
             </div>
           </div>
         </section>
+
+        {/* Footer section */}
         <section>
-          <footer className="bg-green-900 text-white py-8">
+          <footer className="bg-[#00140F] text-white py-8">
             <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
               {/* Logo and Description */}
               <div className="space-y-4">
                 {/* <h2 className="text-lg font-bold">SecureData</h2> */}
-                <div className="relative h-12 w-[150px] md:w-[197px]"></div>
+                <div className="relative h-12 w-[150px] md:w-[197px]">
+                  <Image src={"/images/logo.svg"} fill alt="logo" />
+                </div>
                 <p className="text-sm">
                   SecureData is designed to handle a wide range of personal and
                   professional information securely.
@@ -370,12 +408,7 @@ function LandingPage() {
                     placeholder="Enter your email"
                     className="px-4 py-2 text-black rounded-md focus:outline-none"
                   />
-                  <button
-                    type="submit"
-                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition"
-                  >
-                    Subscribe
-                  </button>
+                  <Button className="w-full sm:w-auto">Get Started</Button>
                 </form>
               </div>
             </div>
