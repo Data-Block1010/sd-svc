@@ -1,6 +1,5 @@
 import Nav from "@/src/components/reuseables/Nav";
 import { Button } from "@/src/components/ui/button";
-import { Input } from "@/src/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -56,7 +55,7 @@ function LandingPage() {
   return (
     <>
       <div>
-        <div className="bg-[#00140F] p-5 sm:flex-col-1">
+        <div className="bg-[#00140F] px-2 md:px-5 md:py-4 sm:flex-col-1">
           <Nav />
 
           {/* Hero section */}
@@ -100,7 +99,7 @@ function LandingPage() {
           {/* Features section */}
           <div className="max-w-[95%] mx-auto p-4 sm:p-8">
             <h1 className="text-white text-lg sm:text-xl">Features</h1>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-white font-bold mt-2">
+            <h1 className="text-xl sm:text-xl lg:text-4xl text-white font-bold mt-2">
               Why Choose SecureData?
             </h1>
             <p className="text-white mt-2 w-full sm:w-3/4 md:w-2/3 lg:w-5/12 text-sm sm:text-base">
@@ -135,7 +134,7 @@ function LandingPage() {
               height={350}
               width={350}
               alt="ma"
-              className="shrink-0 w-full max-w-[250px] sm:max-w-[300px] lg:max-w-[350px]"
+              className="shrink-0 w-full md:max-w-[300px] lg:max-w-[350px]"
             />
           </div>
           <div className="w-full lg:w-7/12">
@@ -147,7 +146,7 @@ function LandingPage() {
               <Star className="text-yellow-200 " fill="yellow" />
             </div>
             <div className="text-left">
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white font-Inter">
+              <h1 className="text-lg mt-2 lg:text-3xl font-bold text-white font-Inter">
                 The integration with government services has made my work so
                 much easier. I can securely share verified documents with just a
                 few clicks.
