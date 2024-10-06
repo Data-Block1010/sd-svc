@@ -117,7 +117,6 @@ function DataManagementUpload() {
     },
   });
 
-  console.log(storedData);
   return (
     <>
       <div

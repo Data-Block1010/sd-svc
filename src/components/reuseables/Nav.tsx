@@ -34,7 +34,7 @@ function Nav() {
           {pathname === "/" && (
             <Link
               href="/login"
-              className="text-white hover:scale-105 transition-all duration-200 ease-in-out bg-primary px-6 rounded-lg py-3"
+              className="text-white text-xs hover:scale-105 transition-all duration-200 ease-in-out bg-primary px-6 rounded-lg py-3"
             >
               Get Started
             </Link>
