@@ -1,0 +1,33 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "Wilfred",
+    "Wilfred_2",
+    "akinwunmi",
+    "favvie",
+    "favvie-landing",
+    "k's",
+    "main",
+    "origin"
+  ],
+  "parent": {
+    "Wilfred": "main",
+    "Wilfred_2": "main",
+    "akinwunmi": "main",
+    "favvie": "main",
+    "favvie-landing": "favvie",
+    "k's": "main",
+    "main": null,
+    "origin": "main"
+  },
+  "order": [
+    "main",
+    "Wilfred",
+    "Wilfred_2",
+    "akinwunmi",
+    "favvie",
+    "k's",
+    "origin",
+    "favvie-landing"
+  ]
+}

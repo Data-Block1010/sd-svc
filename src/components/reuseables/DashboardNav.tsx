@@ -13,10 +13,10 @@ function DashboardNav() {
     //   name: "Notifications",
     //   link: "/dashboard/notifications",
     // },
-    // {
-    //   name: "Access Control",
-    //   link: "/dashboard/access-control",
-    // },
+    {
+      name: "Access Control",
+      link: "/dashboard/access-control",
+    },
     {
       name: "Data Verification Using(ZKP)",
       link: "/dashboard/data-verification",
