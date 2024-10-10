@@ -139,7 +139,10 @@ export const columns: ColumnDef<DataRecord>[] = [
             toast.success(`Encryption secret Copied`);
           }}
         >
-          {row.original.encryptedSecret}
+          {/* {row.original.encryptedSecret} */}
+
+          {String(row.original.encryptedSecret).substring(0,4) + "xxxxxxxxx"}
+
         </div>
       );
     },

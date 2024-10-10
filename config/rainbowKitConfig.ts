@@ -9,8 +9,10 @@ import {
   lisk,
   mainnet,
   zksyncSepoliaTestnet,
+  liskSepolia,
 } from "viem/chains";
 //import { defaultConfig } from 'next/dist/server/config-shared';
+
 
 export const config = getDefaultConfig({
   appName: "Secure_Data",
@@ -21,6 +23,7 @@ export const config = getDefaultConfig({
     base,
     lisk,
     zksyncSepoliaTestnet,
+    liskSepolia,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS == "true" ? [sepolia] : []),
   ],
   ssr: true, // If your dApp uses server side rendering (SSR)
