@@ -16,7 +16,7 @@ import Web3 from "web3";
 import { useGetUserDataHashes } from "@/src/hooks/userHook/useUser";
 import { useWriteContract } from "wagmi";
 import { abi } from "@/src/contract/DataStorage2.json";
-
+import { DataStorageContract } from "@/src/lib/contract";
 
 declare global {
   interface Window {
@@ -100,7 +100,8 @@ function DataManagementUpload() {
             if (res?.txHash && web3) {
               writeContractAsync({
                 abi,
-                address: "0x6b175474e89094c44da98b954eedeac495271d0f",
+                // @ts-ignore
+                address: DataStorageContract.address,
                 functionName: "storeData",
                 args: [res?.txHash],
               }).then((res) => {
@@ -202,7 +203,7 @@ function DataManagementUpload() {
             <div className="px-6 py-5 border-b">
               <p>File Uploaded</p>
             </div>
-            <DataTableDemo userHashes={userHashes} />
+            <DataTableDemo userHashes={userHashes} getHash={getHash} />
           </div>
         </>
       )}

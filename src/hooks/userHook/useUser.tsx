@@ -19,7 +19,7 @@ export const useGetUserDataHashes = (enabled = false) => {
     refetchOnMount: false,
     queryFn: async () => {
       const response = await Service.UserServices.getUserDataHashes();
-      return response;
+      return response.reverse();
     },
   });
 };

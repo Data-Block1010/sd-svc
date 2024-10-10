@@ -21,10 +21,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/src/components/ui/form";
-import Link from "next/link";
-import { Checkbox } from "@/src/components/ui/checkbox";
 import StepsContainer from "@/src/components/reuseables/stepSlider";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import {
   useSignInMutation,
   useSignUpMutation,
@@ -36,7 +33,7 @@ function LoginScreen() {
     <OnboardingLayout>
       <div className="h-[95%] md:h-[73%] w-11/12 md:w-8/12 flex flex-col items-center">
         <h1 className="text-3xl mt-2 font-semibold z-30">Create an account</h1>
-        <div className="mt-8 z-30">
+        <div className="mt-8 z-30 px-2">
           {/* tabs */}
           <TabComp />
         </div>
@@ -49,7 +46,7 @@ export default LoginScreen;
 
 function TabComp() {
   return (
-    <Tabs defaultValue="signUp" className="w-[90vw] md:w-[400px]">
+    <Tabs defaultValue="Login" className="w-[90vw] md:w-[400px]">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="signUp">Sign up</TabsTrigger>
         <TabsTrigger value="Login">Log in</TabsTrigger>
@@ -86,18 +83,22 @@ function SignUp(props: any) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    mutateAsync(values).then((res) => {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const res = await mutateAsync(values); // Await the mutation
       if (res?.data) {
         form.reset();
         form.resetField("password");
         form.resetField("username");
       }
-    });
+    } catch (err) {
+      // Handle error without reloading the page
+      console.error("Sign up failed:", err);
+    }
   }
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 px-2">
       <CustomError isError={isError} error={error} />
       <Form {...form}>
         <form className="space-y-6">
@@ -149,7 +150,7 @@ function SignUp(props: any) {
 
       {/* <div className='mt-10' /> */}
       <Button
-        type="button"
+        type="submit"
         className="w-full h-12 z-[9999] bg-primary hover:bg-primary30 rounded-lg text-white mt-4"
         onClick={form.handleSubmit(onSubmit)}
         disabled={isPending}
@@ -171,14 +172,18 @@ function Login() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    mutateAsync(values).then((res) => {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const res = await mutateAsync(values); // Await the mutation
       if (res?.data) {
         form.reset();
         form.resetField("password");
         form.resetField("username");
       }
-    });
+    } catch (err) {
+      // Handle error without reloading the page
+      console.error("Login failed:", err);
+    }
   }
 
   return (
