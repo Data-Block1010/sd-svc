@@ -280,165 +280,169 @@ function LandingPage() {
         </section>
 
         {/* Editorial section */}
-        <section className="bg-[#04483A] p-4 py-10 sm:p-6 md:p-10 flex justify-center">
-          <div className="bg-[#F9FAFB] rounded-lg p-6 sm:p-8 md:p-10 w-full max-w-7xl">
-            <div className="flex flex-col lg:flex-row items-start">
-              <div className="w-full lg:w-1/2 mb-6 lg:mb-0 lg:pr-8 lg:mt-10">
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-left">
-                  Ready to take control of your data?
-                </h1>
-                <p className="mt-4 sm:mt-6 text-gray-700 text-base sm:text-lg lg:text-xl text-left">
-                  Whether you&apos;re protecting personal documents or managing
-                  sensitive business information, SecureData is the trusted
-                  solution for secure data management.
-                </p>
-                <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
-                  <Button
-                    variant="ghost"
-                    className="w-full sm:w-auto border border-secondary bg-white"
-                  >
-                    Learn More
-                  </Button>
-                  <Button className="w-full sm:w-auto">Get Started</Button>
+        <Slide direction="up" damping={0.3} triggerOnce cascade>
+          <section className="bg-[#04483A] p-4 py-10 sm:p-6 md:p-10 flex justify-center">
+            <div className="bg-[#F9FAFB] rounded-lg p-6 sm:p-8 md:p-10 w-full max-w-7xl">
+              <div className="flex flex-col lg:flex-row items-start">
+                <div className="w-full lg:w-1/2 mb-6 lg:mb-0 lg:pr-8 lg:mt-10">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold text-left">
+                    Ready to take control of your data?
+                  </h1>
+                  <p className="mt-4 sm:mt-6 text-gray-700 text-base sm:text-lg lg:text-xl text-left">
+                    Whether you&apos;re protecting personal documents or
+                    managing sensitive business information, SecureData is the
+                    trusted solution for secure data management.
+                  </p>
+                  <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                    <Button
+                      variant="ghost"
+                      className="w-full sm:w-auto border border-secondary bg-white"
+                    >
+                      Learn More
+                    </Button>
+                    <Button className="w-full sm:w-auto">Get Started</Button>
+                  </div>
                 </div>
-              </div>
-              <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mt-6 lg:mt-0">
-                <Image
-                  src="/mock.svg"
-                  height={600}
-                  width={600}
-                  alt="mock"
-                  className="w-full max-w-[400px] lg:max-w-[600px] object-contain"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Footer section */}
-        <section>
-          <footer className="bg-[#00140F] text-white py-8">
-            <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-              {/* Logo and Description */}
-              <div className="space-y-4">
-                {/* <h2 className="text-lg font-bold">SecureData</h2> */}
-                <div className="relative h-12 w-[150px] md:w-[197px]">
-                  <Image src={"/images/logo.svg"} fill alt="logo" />
-                </div>
-                <p className="text-sm">
-                  SecureData is designed to handle a wide range of personal and
-                  professional information securely.
-                </p>
-              </div>
-
-              {/* Product Links */}
-              <div>
-                <h3 className="text-md font-semibold mb-2">Product</h3>
-                <ul className="space-y-2">
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Overview
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Features
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Solutions{" "}
-                      <span className="bg-gray-800 text-xs py-1 px-2 rounded-full ml-1">
-                        New
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Tutorials
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Pricing
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Releases
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Resources Links */}
-              <div>
-                <h3 className="text-md font-semibold mb-2">Resources</h3>
-                <ul className="space-y-2">
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Blog
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Newsletter
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Events
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Help centre
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Tutorials
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="#" className="hover:underline">
-                      Support
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Subscribe Form */}
-              <div className="mr-10">
-                <h3 className="text-md font-semibold mb-2">Stay up to date</h3>
-                <form className="flex  flex-col space-y-2 space-x-2 md:space-y-0 md:flex-row ">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="px-4 py-2 text-black rounded-md focus:outline-none"
+                <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mt-6 lg:mt-0">
+                  <Image
+                    src="/mock.svg"
+                    height={600}
+                    width={600}
+                    alt="mock"
+                    className="w-full max-w-[400px] lg:max-w-[600px] object-contain"
                   />
-                  <Button className="w-full sm:w-auto">Get Started</Button>
-                </form>
+                </div>
               </div>
             </div>
+          </section>
 
-            {/* Bottom Footer */}
-            <div className="mt-8 border-t border-gray-600 pt-4 text-sm text-gray-400 text-center">
-              <p>© 2024 SecureData. All rights reserved.</p>
-              <div className="flex justify-center space-x-4 mt-2">
-                <Link href="#" className="hover:underline">
-                  Terms
-                </Link>
-                <Link href="#" className="hover:underline">
-                  Privacy
-                </Link>
-                <Link href="#" className="hover:underline">
-                  Cookies
-                </Link>
+          {/* Footer section */}
+          <section>
+            <footer className="bg-[#00140F] text-white py-8">
+              <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+                {/* Logo and Description */}
+                <div className="space-y-4">
+                  {/* <h2 className="text-lg font-bold">SecureData</h2> */}
+                  <div className="relative h-12 w-[150px] md:w-[197px]">
+                    <Image src={"/images/logo.svg"} fill alt="logo" />
+                  </div>
+                  <p className="text-sm">
+                    SecureData is designed to handle a wide range of personal
+                    and professional information securely.
+                  </p>
+                </div>
+
+                {/* Product Links */}
+                <div>
+                  <h3 className="text-md font-semibold mb-2">Product</h3>
+                  <ul className="space-y-2">
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Overview
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Features
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Solutions{" "}
+                        <span className="bg-gray-800 text-xs py-1 px-2 rounded-full ml-1">
+                          New
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Tutorials
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Pricing
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Releases
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Resources Links */}
+                <div>
+                  <h3 className="text-md font-semibold mb-2">Resources</h3>
+                  <ul className="space-y-2">
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Blog
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Newsletter
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Events
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Help centre
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Tutorials
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="hover:underline">
+                        Support
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Subscribe Form */}
+                <div className="mr-10">
+                  <h3 className="text-md font-semibold mb-2">
+                    Stay up to date
+                  </h3>
+                  <form className="flex  flex-col space-y-2 space-x-2 md:space-y-0 md:flex-row ">
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      className="px-4 py-2 text-black rounded-md focus:outline-none"
+                    />
+                    <Button className="w-full sm:w-auto">Get Started</Button>
+                  </form>
+                </div>
               </div>
-            </div>
-          </footer>
-        </section>
+
+              {/* Bottom Footer */}
+              <div className="mt-8 border-t border-gray-600 pt-4 text-sm text-gray-400 text-center">
+                <p>© 2024 SecureData. All rights reserved.</p>
+                <div className="flex justify-center space-x-4 mt-2">
+                  <Link href="#" className="hover:underline">
+                    Terms
+                  </Link>
+                  <Link href="#" className="hover:underline">
+                    Privacy
+                  </Link>
+                  <Link href="#" className="hover:underline">
+                    Cookies
+                  </Link>
+                </div>
+              </div>
+            </footer>
+          </section>
+        </Slide>
       </div>
     </>
   );
