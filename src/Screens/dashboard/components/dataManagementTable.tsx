@@ -143,7 +143,7 @@ export function DataTableDemo({
             toast.success(`Hash Copied`);
           }}
         >
-          {row.original.dataHash}
+          {String(row.original.encryptedSecret).substring(0,4) + "xxxxxxxxx"}
         </div>
       ),
     },
