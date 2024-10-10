@@ -34,6 +34,11 @@ import {
 import Image from "next/image";
 import { filePdf, getMB } from "@/src/lib/types/constant";
 import { Edit2, Eye, Trash } from "iconsax-react";
+import { useReadContract } from "wagmi";
+import { config } from "@/config/rainbowKitConfig";
+import { DataStorageContract } from "@/src/lib/contract";
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from "wagmi";
+import { abi } from "@/src/contract/DataStorage2.json";
 
 const data: Payment[] = [
   {
@@ -46,7 +51,7 @@ const data: Payment[] = [
     amount: 316,
     status: "success",
     email: "ken99@yahoo.com",
-    actions: ["details"] 
+    actions: ["details"],
   },
   {
     id: "3u1reuv4",
@@ -58,7 +63,7 @@ const data: Payment[] = [
     amount: 242,
     status: "success",
     email: "Abe45@gmail.com",
-    actions: ["details", "request re-verification"] 
+    actions: ["details", "request re-verification"],
   },
   {
     id: "derv1ws0",
@@ -71,7 +76,7 @@ const data: Payment[] = [
     amount: 837,
     status: "processing",
     email: "Monserrat44@gmail.com",
-    actions: ["details"] 
+    actions: ["details"],
   },
   {
     id: "derv1ws0",
@@ -83,7 +88,7 @@ const data: Payment[] = [
     amount: 837,
     status: "processing",
     email: "Monserrat44@gmail.com",
-    actions: ["details", "share data"] 
+    actions: ["details", "share data"],
   },
   {
     id: "derv1ws0",
@@ -95,7 +100,7 @@ const data: Payment[] = [
     amount: 837,
     status: "processing",
     email: "Monserrat44@gmail.com",
-    actions: ["details"] 
+    actions: ["details"],
   },
 ];
 
@@ -150,20 +155,20 @@ export const columns: ColumnDef<Payment>[] = [
       </div>
     ),
   },
- 
+
   {
     accessorKey: "Requester",
     header: () => <div className="text-left">Requester</div>,
     cell: ({ row }) => (
-        <div className="capitalize flex items-center gap-3">
-          {/* <Image src={filePdf} alt="file" width={30} height={30} /> */}
-          <div className="">
-            <p className="text-sm text-secondary">{row.original.requester}</p>
-            {/* @ts-ignore */}
-            {/* <p className="text-xs text-secondary/90">{getMB(row.original)} MB</p> */}
-          </div>
+      <div className="capitalize flex items-center gap-3">
+        {/* <Image src={filePdf} alt="file" width={30} height={30} /> */}
+        <div className="">
+          <p className="text-sm text-secondary">{row.original.requester}</p>
+          {/* @ts-ignore */}
+          {/* <p className="text-xs text-secondary/90">{getMB(row.original)} MB</p> */}
         </div>
-      ),
+      </div>
+    ),
   },
   {
     accessorKey: "Requested Date",
@@ -191,28 +196,27 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => {
       return (
         <div className="text-sm">
-  {row.original.status === 'processing' && (
-    <div className="flex items-center justify-center bg-yellow-100 text-yellow-600 rounded-full px-3 py-1">
-      <span className="w-2 h-2 bg-yellow-600 rounded-full mr-2"></span>
-      Pending
-    </div>
-  )}
+          {row.original.status === "processing" && (
+            <div className="flex items-center justify-center bg-yellow-100 text-yellow-600 rounded-full px-3 py-1">
+              <span className="w-2 h-2 bg-yellow-600 rounded-full mr-2"></span>
+              Pending
+            </div>
+          )}
 
-  {row.original.status === 'success' && (
-    <div className="flex items-center justify-center bg-green-100 text-green-600 rounded-full px-3 py-1">
-      <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
-      Verified
-    </div>
-  )}
+          {row.original.status === "success" && (
+            <div className="flex items-center justify-center bg-green-100 text-green-600 rounded-full px-3 py-1">
+              <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
+              Verified
+            </div>
+          )}
 
-  {row.original.status === 'failed' && (
-    <div className="flex items-center justify-center bg-red-100 text-red-600 rounded-full px-3 py-1">
-      <span className="w-2 h-2 bg-red-600 rounded-full mr-2"></span>
-      Failed
-    </div>
-  )}
-</div>
-
+          {row.original.status === "failed" && (
+            <div className="flex items-center justify-center bg-red-100 text-red-600 rounded-full px-3 py-1">
+              <span className="w-2 h-2 bg-red-600 rounded-full mr-2"></span>
+              Failed
+            </div>
+          )}
+        </div>
       );
     },
   },
@@ -220,10 +224,10 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "LastUpdated",
     header: () => <div className="text-left">LastUpdated</div>,
     cell: ({ row }) => (
-        <div className="text-sm text-secondary">
-          {row.original.uploaded?.toDateString().slice(0, 15)}
-        </div>
-      ),
+      <div className="text-sm text-secondary">
+        {row.original.uploaded?.toDateString().slice(0, 15)}
+      </div>
+    ),
   },
   {
     accessorKey: "Actions",
@@ -243,7 +247,6 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
   },
-  
 
   {
     id: "actions",
@@ -278,6 +281,17 @@ export const columns: ColumnDef<Payment>[] = [
 ];
 
 export function DataTableDemo() {
+  // const { address } = useAccount();
+  // const { data: GetData } = useReadContract({
+  //   abi,
+  //   // @ts-ignore
+  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+  //   functionName: "getData",
+
+  //   args: [address],
+  // });
+
+  // console.log({ GetData, address });
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

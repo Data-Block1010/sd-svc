@@ -12,7 +12,45 @@ export const useStoreDataMutation = () => {
       return Service.DataManagementService.storeData(data);
     },
     onSuccess: (data, variables, context) => {
-      toast.success("File uploaded successfully");
+      // toast.success("File uploaded successfully");
+    },
+  });
+};
+
+export const useUpdateDataMutation = () => {
+  return useMutation({
+    mutationFn: (data: {
+      file: File;
+      secret: string;
+      username: string;
+      cid: string;
+    }) => {
+      return Service.DataManagementService.updateData(data);
+    },
+    onSuccess: (data, variables, context) => {
+      // toast.success("File uploaded successfully");
+    },
+  });
+};
+
+export const useDeleteDataMutation = () => {
+  return useMutation({
+    mutationFn: (data: { cid: string }) => {
+      return Service.DataManagementService.deleteData(data);
+    },
+    onSuccess: (data, variables, context) => {
+      // toast.success("File uploaded successfully");
+    },
+  });
+};
+
+export const useViewDataMutation = () => {
+  return useMutation({
+    mutationFn: (data: { file: File; secret: string }) => {
+      return Service.DataManagementService.viewData(data);
+    },
+    onSuccess: (data, variables, context) => {
+      // toast.success("File uploaded successfully");
     },
   });
 };

@@ -34,6 +34,15 @@ class DataManagementService {
       handleRequestError(error);
     }
   }
+
+  async viewData(data: any) {
+    try {
+      const response = await CLIENT.post("/view-data", data);
+      return response.data;
+    } catch (error) {
+      handleRequestError(error);
+    }
+  }
 }
 
 export default new DataManagementService();

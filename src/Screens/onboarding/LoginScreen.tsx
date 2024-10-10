@@ -98,7 +98,7 @@ function SignUp(props: any) {
   }
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 px-2">
       <CustomError isError={isError} error={error} />
       <Form {...form}>
         <form className="space-y-6">
