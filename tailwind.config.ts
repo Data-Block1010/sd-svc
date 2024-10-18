@@ -12,6 +12,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        inter: ["var(--font-inter)"],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -25,6 +28,9 @@ const config: Config = {
       colors: {
         primary: "#15A588",
         secondary: "#344054",
+        border: "#E9EAEB",
+        border2: "#717680",
+        border3: "#535862",
       },
     },
   },

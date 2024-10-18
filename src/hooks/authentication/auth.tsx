@@ -28,13 +28,12 @@ export const useSignInMutation = () => {
     },
     onSuccess: (data, variables, context) => {
       if (!data) return;
-      console.log("successful signin", data, variables, context);
       toast.success("Logged in successfully");
       localStorage.setItem(
         `${STORAGE_KEY}_details`,
         JSON.stringify(data.token)
       );
-      router.push("/dashboard/data-management");
+      router.push("/dashboard/overview");
     },
     mutationKey: ["signin"],
   });

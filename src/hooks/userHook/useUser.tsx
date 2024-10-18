@@ -18,8 +18,12 @@ export const useGetUserDataHashes = (enabled = false) => {
     queryKey: ["getUserDataHashes"],
     refetchOnMount: false,
     queryFn: async () => {
-      const response = await Service.UserServices.getUserDataHashes();
-      return response.reverse();
+      try {
+        const response = await Service.UserServices.getUserDataHashes();
+        return response.reverse();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 };
