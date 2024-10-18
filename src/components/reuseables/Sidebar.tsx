@@ -57,11 +57,11 @@ function Sidebar() {
     },
     {
       title: "Generate ZKP",
-      href: "/dashboard/generate-zkp",
+      href: "/dashboard/generate-zk-proof",
       icon: (
         <PieChart
           size="20"
-          color={pathname === "/dashboard/generate-zkp" ? "#15A588" : "#717680"}
+          color={pathname === "/dashboard/generate-zk-proof" ? "#15A588" : "#717680"}
         />
       ),
     },
