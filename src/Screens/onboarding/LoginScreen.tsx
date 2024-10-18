@@ -31,13 +31,7 @@ import CustomError from "@/src/components/reuseables/CustomError";
 function LoginScreen() {
   return (
     <OnboardingLayout>
-      <div className="h-[95%] md:h-[73%] w-11/12 md:w-8/12 flex flex-col items-center">
-        <h1 className="text-3xl mt-2 font-semibold z-30">Create an account</h1>
-        <div className="mt-8 z-30 px-2">
-          {/* tabs */}
-          <TabComp />
-        </div>
-      </div>
+      <TabComp />
     </OnboardingLayout>
   );
 }
@@ -87,9 +81,8 @@ function SignUp(props: any) {
     try {
       const res = await mutateAsync(values); // Await the mutation
       if (res?.data) {
-        form.reset();
-        form.resetField("password");
-        form.resetField("username");
+        form.setValue("password", "");
+        form.setValue("username", "");
       }
     } catch (err) {
       // Handle error without reloading the page
@@ -127,7 +120,7 @@ function SignUp(props: any) {
               <FormItem>
                 <FormControl>
                   <Input
-                    placeholder="Enter your password"
+                    placeholder="********"
                     {...field}
                     type={showPassword ? "text" : "password"}
                     rightIcon={
@@ -151,7 +144,7 @@ function SignUp(props: any) {
       {/* <div className='mt-10' /> */}
       <Button
         type="submit"
-        className="w-full h-12 z-[9999] bg-primary hover:bg-primary30 rounded-lg text-white mt-4"
+        className="w-full h-12 z-[9999] bg-primary hover:bg-primary30 rounded-lg text-white mt-10"
         onClick={form.handleSubmit(onSubmit)}
         disabled={isPending}
       >
@@ -187,7 +180,8 @@ function Login() {
   }
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 px-2">
+      <CustomError isError={isError} error={error} />
       <Form {...form}>
         <form className="space-y-6">
           <FormField
@@ -199,7 +193,6 @@ function Login() {
                   <Input
                     placeholder="Enter your username"
                     {...field}
-                    // leftIcon={<Sms size="20" variant="Bold" color="gray" />}
                     className="!rounded-lg"
                   />
                 </FormControl>
@@ -235,24 +228,6 @@ function Login() {
               );
             }}
           />
-
-          <div className="flex justify-between -mt-2">
-            <div className="flex items-center gap-3">
-              {/* <Checkbox id="checkbox" name="checkbox" />
-              <label
-                htmlFor="checkbox"
-                className="text-secondary text-sm font-semibold"
-              >
-                Remember for 30 days
-              </label> */}
-            </div>
-            {/* <Link
-              href="/forgot-password"
-              className="text-primary text-sm font-semibold hover:underline"
-            >
-              Forgot Password?
-            </Link> */}
-          </div>
         </form>
       </Form>
 
@@ -265,30 +240,6 @@ function Login() {
       >
         {isPending ? "Logging in" : " Log In"}
       </Button>
-      {/* <div className="w-full flex items-center justify-between mt-4">
-        <div className="w-[40%] h-px bg-gray-300"></div>
-        <p>OR</p>
-        <div className="w-[40%] h-px  bg-gray-300"></div>
-      </div> */}
-
-      {/* <ConnectButton /> */}
-
-      {/* <div className="flex space-x-2 my-4 justify-center  ">
-        <div className="flex items-center gap-3">
-          <label
-            htmlFor="checkbox"
-            className="text-secondary text-sm font-semibold"
-          >
-            Don&rsquo;t have an account?
-          </label>
-        </div>
-        <Link
-          href="/login"
-          className="text-primary text-sm font-semibold hover:underline"
-        >
-          Sign Up
-        </Link>
-      </div> */}
     </div>
   );
 }
