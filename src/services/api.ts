@@ -44,12 +44,15 @@ CLIENT.interceptors.response.use(
     // Do something with response error
     const { errorMessage, id } = parseError(error);
     toast.error(errorMessage);
-    // if (error?.response?.request?.status === 401) {
-    //   // console.log('error 401', error?.response?.request?.status)
-    //   localStorage.removeItem(`${STORAGE_KEY}_details`);
-    //   // toast.error("Logged out!");
-    //   window.location.href = "/login";
-    // }
+    if (
+      error?.response?.request?.status === 401 &&
+      errorMessage === "Unauthorized"
+    ) {
+      // console.log('error 401', error?.response?.request?.status)
+      localStorage.removeItem(`${STORAGE_KEY}_details`);
+      // toast.error("Logged out!");
+      window.location.href = "/login";
+    }
 
     return Promise.reject(error);
   }
