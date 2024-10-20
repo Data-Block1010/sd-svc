@@ -1,9 +1,8 @@
 "use client";
 import { Button } from "@/src/components/ui/button";
 import { useGetUserDataHashes } from "@/src/hooks/userHook/useUser";
-import React from "react";
+import React, { useMemo } from "react";
 import { useAccount } from "wagmi";
-
 import dynamic from "next/dynamic";
 
 const DataTable = dynamic(
@@ -20,6 +19,11 @@ function OverViewScreen() {
   const { address } = useAccount();
   const { data: userHashes, refetch: getHash } = useGetUserDataHashes();
 
+  const formattedAddress = useMemo(() => {
+    if (!address) return "";
+    return `${address.substring(0, 6)}...${address.substring(38, 42)}`;
+  }, [address]);
+
   return (
     <div>
       <h1 className="text-lg md:text-2xl font-bold">Dashboard</h1>
@@ -31,7 +35,7 @@ function OverViewScreen() {
                 Wallet address
               </h5>
               <h3 className="md:text-xl xl:text-2xl font-semibold font-inter">
-                {address?.substring(0, 6)}...{address?.substring(38, 42)}
+                {formattedAddress}
               </h3>
             </div>
             <Button

@@ -12,22 +12,23 @@ function OnboardingLayout({
       <div className="hidden lg:block lg:col-span-2 relative">
         <Image
           src={loginImage}
-          className="absolute -top-8 md:-top-5 xl:-top-20 left-[0%] md:left-[3%] lg:left-[14%] xl:left-[23%]"
+          layout="fill"
+          objectFit="cover"
+          className="absolute left-0 top-0"
           alt="pattern"
-          fill
         />
       </div>
-      <div className="col-span-1 lg:col-span-3 h-full overflow-y-scroll relative flex items-center justify-center">
+      <div className="col-span-1 lg:col-span-3 h-full overflow-y-scroll flex items-center justify-center relative">
         <div className="absolute left-8 top-8 h-12 w-[150px] md:w-[197px]">
-          <Image src={"/images/logo.svg"} fill alt="logo" />
+          <Image src="/images/logo.svg" layout="fill" alt="logo" />
         </div>
         <div className="relative flex items-center justify-center">
           <Image
             src={logo2}
-            className="absolute -top-8 md:-top-5 xl:-top-20 left-[0%] md:left-[3%] lg:left-[14%] xl:left-[23%]"
+            layout="fill"
+            objectFit="cover"
+            className="absolute left-0 top-0"
             alt="pattern"
-            width={768}
-            height={768}
           />
         </div>
         {children}
