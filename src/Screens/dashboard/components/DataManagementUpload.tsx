@@ -9,7 +9,10 @@ import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { DataTableDemo } from "./dataManagementTable";
 import { useGetSecret } from "@/src/hooks/generateSecret/generateSecret";
-import { useStoreDataMutation } from "@/src/hooks/dataManagement/dataManagement";
+import {
+  useDeleteDataMutation,
+  useStoreDataMutation,
+} from "@/src/hooks/dataManagement/dataManagement";
 import { useStoreOnBlockchainMutation } from "@/src/hooks/blockchain/useBlockchain";
 import Spinner from "@/src/components/reuseables/Spinner";
 import Web3 from "web3";
@@ -34,6 +37,7 @@ function DataManagementUpload() {
   } = useWriteContract();
 
   const { data: userHashes, refetch: getHash } = useGetUserDataHashes();
+  const { mutateAsync: deleteData } = useDeleteDataMutation();
   const [isEnabled, setIsEnabled] = useState(false);
   const [web3, setWeb3] = useState<Web3 | null>(null);
   const [account, setAccount] = useState<string | null>(null);
@@ -98,17 +102,27 @@ function DataManagementUpload() {
           // @ts-ignore
           mutateAsync(formData).then((res) => {
             if (res?.txHash && web3) {
+              console.log(res);
               writeContractAsync({
                 abi,
                 // @ts-ignore
                 address: DataStorageContract.address,
                 functionName: "storeData",
                 args: [res?.txHash],
-              }).then((res) => {
-                getHash().then((res) => {
-                  setUploadedFiles([]);
+              })
+                .then((res) => {
+                  getHash().then((res) => {
+                    setUploadedFiles([]);
+                  });
+                })
+                .catch((err) => {
+                  console.log(err);
+                  deleteData({ cid: res.dataHash }).then((res) =>
+                    getHash().then((res) => {
+                      setUploadedFiles([]);
+                    })
+                  );
                 });
-              });
             }
           });
         }

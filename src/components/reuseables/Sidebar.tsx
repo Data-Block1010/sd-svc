@@ -4,7 +4,7 @@ import { Input } from "../ui/input";
 import { ChevronsUpDown, PieChart, Search } from "lucide-react";
 import { Button } from "../ui/button";
 import { useMemo } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   FolderOpen,
@@ -18,6 +18,7 @@ import {
 } from "iconsax-react";
 
 const Sidebar = () => {
+  const router = useRouter();
   const pathname = usePathname();
   const routes = useMemo(
     () => [
@@ -95,7 +96,9 @@ const Sidebar = () => {
             }`}
           >
             <Icon size={20} color={pathname === href ? "#15A588" : "#717680"} />
-            <Link href={href}>{title}</Link>
+            <div onClick={() => router.push(href)} className={"cursor-pointer"}>
+              {title}
+            </div>
           </div>
         ))}
       </div>

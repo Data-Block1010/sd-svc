@@ -42,6 +42,8 @@ import {
 } from "@/src/hooks/dataManagement/dataManagement";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import Spinner from "@/src/components/reuseables/Spinner";
+import LoadingModal from "@/src/components/reuseables/LoadingModal";
 
 export type Payment = {
   id: string;
@@ -73,6 +75,9 @@ export function DataTableDemo({
     options?: RefetchOptions
   ) => Promise<QueryObserverResult<any, Error>>;
 }) {
+  const { mutateAsync: deleteData, isPending: deleting } =
+    useDeleteDataMutation();
+
   const columns = useMemo<ColumnDef<DataRecord>[]>(
     () => [
       {
@@ -188,10 +193,12 @@ export function DataTableDemo({
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="flex items-center gap-3"
-                  // onClick={() => mutateAsync({ cid: payment.dataHash })}
+                  onClick={() =>
+                    deleteData({ cid: payment.dataHash }).then(() => getHash())
+                  }
                 >
                   <Trash size={18} color={"#000"} />{" "}
-                  <p className="text-sm">Delete</p>
+                  {deleting ? <Spinner /> : <p className="text-sm">Delete</p>}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="flex items-center gap-3"
@@ -313,6 +320,11 @@ export function DataTableDemo({
           </div>
         </div>
       )}
+      <LoadingModal
+        text="Deleting File..."
+        isOpen={deleting}
+        onClose={() => {}}
+      />
     </div>
   );
 }
