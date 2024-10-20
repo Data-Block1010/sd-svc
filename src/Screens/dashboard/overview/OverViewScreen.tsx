@@ -1,9 +1,10 @@
 "use client";
 import { Button } from "@/src/components/ui/button";
 import { useGetUserDataHashes } from "@/src/hooks/userHook/useUser";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useAccount } from "wagmi";
 import dynamic from "next/dynamic";
+import Web3 from "web3";
 
 const DataTable = dynamic(
   () =>
@@ -17,12 +18,50 @@ const DataTable = dynamic(
 
 function OverViewScreen() {
   const { address } = useAccount();
+  const [web3, setWeb3] = useState<Web3 | null>(null);
+  const [account, setAccount] = useState<string | null>(null);
+
   const { data: userHashes, refetch: getHash } = useGetUserDataHashes();
 
   const formattedAddress = useMemo(() => {
     if (!address) return "";
     return `${address.substring(0, 6)}...${address.substring(38, 42)}`;
   }, [address]);
+
+  useEffect(() => {
+    const initializeWeb3 = async () => {
+      if (typeof window.ethereum !== "undefined") {
+        try {
+          // Request account access
+          await window.ethereum.request({ method: "eth_requestAccounts" });
+          const web3Instance = new Web3(window.ethereum);
+          setWeb3(web3Instance);
+
+          // Get the current account
+          // const accounts = await web3Instance.eth.getAccounts();
+          // setAccount(accounts[0]);
+
+          // Listen for account changes
+          // window.ethereum.on("accountsChanged", (accounts: string[]) => {
+          //   setAccount(accounts[0]);
+          // });
+        } catch (error) {
+          console.error("Failed to initialize Web3", error);
+        }
+      } else {
+        console.error("MetaMask is not installed.");
+      }
+    };
+
+    initializeWeb3();
+
+    // Cleanup listener on component unmount
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener("accountsChanged", setAccount);
+      }
+    };
+  }, []);
 
   return (
     <div>

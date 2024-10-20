@@ -25,13 +25,13 @@ export default DataVerificationScreen;
 function TabComp() {
   return (
     <Tabs defaultValue="request" className="w-[90vw] md:w-full">
-      <TabsList className="grid w-full grid-cols-3">
+      <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger className="text-xs md:text-sm" value="request">
           Request Verification
         </TabsTrigger>
-        <TabsTrigger className="text-xs md:text-sm" value="verification">
+        {/* <TabsTrigger className="text-xs md:text-sm" value="verification">
           Verification Requests
-        </TabsTrigger>
+        </TabsTrigger> */}
         <TabsTrigger className="text-xs md:text-sm" value="dataSharing">
           Data Sharing
         </TabsTrigger>
@@ -39,9 +39,9 @@ function TabComp() {
       <TabsContent value="request">
         <DataVerification />
       </TabsContent>
-      <TabsContent value="verification">
+      {/* <TabsContent value="verification">
         <VerificationRequest />
-      </TabsContent>
+      </TabsContent> */}
       <TabsContent value="dataSharing">
         <DataSharing />
       </TabsContent>
