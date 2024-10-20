@@ -26,7 +26,7 @@ function Nav() {
           )}
           <div>
             {pathname.includes("/dashboard") && (
-              <Button onClick={() => setIsOpen(!isOpen)} className="lg:hidden">
+              <Button onClick={() => setIsOpen(!isOpen)} className="xl:hidden">
                 <Menu />
               </Button>
             )}

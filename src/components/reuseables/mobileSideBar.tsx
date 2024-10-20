@@ -3,6 +3,18 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { logo2 } from "@/src/lib/types/constant";
+import {
+  FolderOpen,
+  Home,
+  Messages2,
+  NoteFavorite,
+  Notification,
+  Profile,
+  Setting2,
+  Verify,
+} from "iconsax-react";
+import { useMemo } from "react";
+import { PieChart } from "lucide-react";
 
 function MobileSideBar({
   isOpen,
@@ -12,32 +24,52 @@ function MobileSideBar({
   onClose: () => void;
 }) {
   const pathname = usePathname();
-  const links = [
-    {
-      name: "Data Management",
-      link: "/dashboard/data-management",
-    },
-    // {
-    //   name: "Notifications",
-    //   link: "/dashboard/notifications",
-    // },
-    // {
-    //   name: "Access Control",
-    //   link: "/dashboard/access-control",
-    // },
-    {
-      name: "Data Verification Using(ZKP)",
-      link: "/dashboard/data-verification",
-    },
-    // {
-    //   name: "Schedule Reports",
-    //   link: "/dashboard/schedule-reports",
-    // },
-    // {
-    //   name: "User Reports",
-    //   link: "/dashboard/user-reports",
-    // },
-  ];
+
+  const routes = useMemo(
+    () => [
+      {
+        title: "Dashboard",
+        href: "/dashboard/overview",
+        icon: Home,
+      },
+      {
+        title: "Upload Documents",
+        href: "/dashboard/data-management",
+        icon: FolderOpen,
+      },
+      {
+        title: "Verification Status",
+        href: "/dashboard/verification-status",
+        icon: Verify,
+      },
+      {
+        title: "Generate ZKP",
+        href: "/dashboard/generate-zk-proof",
+        icon: PieChart,
+      },
+      {
+        title: "Verification Requests",
+        href: "/dashboard/verification-requests",
+        icon: NoteFavorite,
+      },
+      {
+        title: "Settings",
+        href: "/dashboard/settings",
+        icon: Setting2,
+      },
+      {
+        title: "Support",
+        href: "/dashboard/support",
+        icon: Messages2,
+      },
+      {
+        title: "Notifications",
+        href: "/dashboard/notifications",
+        icon: Notification,
+      },
+    ],
+    []
+  );
 
   return (
     <CustomSheet side="right" isOpen={isOpen} onClose={onClose}>
@@ -46,29 +78,22 @@ function MobileSideBar({
           <Image src={logo2} alt="Logo" fill className="h-[20px] md:h-[34px]" />
         </div>
         <div className="scrollbar relative !z-40 mt-7 w-full space-y-2 overflow-y-scroll">
-          {links.map((navlink, i) => {
-            return (
-              <Link
-                href={navlink.link}
-                key={i}
-                className={`z-40 flex h-12 items-center gap-2 transition-all duration-500 ease-out  ${
-                  pathname.includes(navlink.link)
-                    ? "rounded-md bg-[#ffffff] "
-                    : ""
-                }`}
-              >
-                <p
-                  className={`${
-                    pathname === navlink.link
-                      ? "font-semibold text-primary"
-                      : "font-normal text-neutral-600"
-                  } text-sm`}
-                >
-                  {navlink.name}
-                </p>
+          {routes.map(({ title, href, icon: Icon }) => (
+            <div
+              key={title}
+              className={`flex items-center gap-4 cursor-pointer hover:bg-primary10 text-border2 px-3 py-2 rounded-lg font-semibold ${
+                pathname === href && "!text-primary bg-[#FAFAFA]"
+              }`}
+            >
+              <Icon
+                size={20}
+                color={pathname === href ? "#15A588" : "#717680"}
+              />
+              <Link href={href} onClick={onClose}>
+                {title}
               </Link>
-            );
-          })}
+            </div>
+          ))}
         </div>
         {/* <div className="mt-0">
           {pathname.includes("/dashboard") && <ConnectButton />}
