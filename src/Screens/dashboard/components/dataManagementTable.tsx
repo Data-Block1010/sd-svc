@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState } from "react";
 import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
@@ -39,7 +39,11 @@ import {
   useGetUserDetails,
 } from "@/src/hooks/userHook/useUser";
 import { toast } from "sonner";
-import { useDeleteDataMutation } from "@/src/hooks/dataManagement/dataManagement";
+import {
+  useDeleteDataMutation,
+  useUpdateDataMutation,
+  useViewDataMutation,
+} from "@/src/hooks/dataManagement/dataManagement";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 
 export type Payment = {
@@ -73,13 +77,14 @@ export function DataTableDemo({
   ) => Promise<QueryObserverResult<any, Error>>;
 }) {
   const { mutateAsync } = useDeleteDataMutation();
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
+  const { mutateAsync: updatingAsync } = useUpdateDataMutation();
+
+  const { mutateAsync: viewingAsync } = useViewDataMutation();
+
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
 
   const columns: ColumnDef<DataRecord>[] = [
     {
@@ -145,7 +150,7 @@ export function DataTableDemo({
             toast.success(`Hash Copied`);
           }}
         >
-          {String(row.original.encryptedSecret).substring(0,4) + "xxxxxxxxx"}
+          {String(row.original.encryptedSecret).substring(0, 4) + "xxxxxxxxx"}
         </div>
       ),
     },
@@ -200,12 +205,20 @@ export function DataTableDemo({
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex items-center gap-3"
-                // onClick={() => mutateAsync({ cid: payment.dataHash })}
+                onClick={() => mutateAsync({ cid: payment.dataHash })}
               >
                 <Trash size={18} color={"#000"} />{" "}
                 <p className="text-sm">Delete</p>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-3">
+              <DropdownMenuItem
+                className="flex items-center gap-3"
+                onClick={() =>
+                  viewingAsync({
+                    file: payment.filename,
+                    secret: payment.encryptedSecret,
+                  })
+                }
+              >
                 <Eye size={18} /> <p className="text-sm">View details</p>
               </DropdownMenuItem>
             </DropdownMenuContent>
