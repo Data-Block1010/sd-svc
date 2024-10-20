@@ -3,6 +3,9 @@ import Image from "next/image";
 import { Input } from "../ui/input";
 import { ChevronsUpDown, PieChart, Search } from "lucide-react";
 import { Button } from "../ui/button";
+import { useMemo } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import {
   FolderOpen,
   Home,
@@ -13,105 +16,55 @@ import {
   Setting2,
   Verify,
 } from "iconsax-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
-function Sidebar() {
+const Sidebar = () => {
   const pathname = usePathname();
-  const routes = [
-    {
-      title: "Dashboard",
-      href: "/dashboard/overview",
-      icon: (
-        <Home
-          size={20}
-          color={pathname === "/dashboard/overview" ? "#15A588" : "#717680"}
-        />
-      ),
-    },
-    {
-      title: "Upload Documents",
-      href: "/dashboard/data-management",
-      icon: (
-        <FolderOpen
-          size="20"
-          color={
-            pathname === "/dashboard/data-management" ? "#15A588" : "#717680"
-          }
-        />
-      ),
-    },
-    {
-      title: "Verification Status",
-      href: "/dashboard/verification-status",
-      icon: (
-        <Verify
-          size="20"
-          color={
-            pathname === "/dashboard/verification-status"
-              ? "#15A588"
-              : "#717680"
-          }
-        />
-      ),
-    },
-    {
-      title: "Generate ZKP",
-      href: "/dashboard/generate-zk-proof",
-      icon: (
-        <PieChart
-          size="20"
-          color={pathname === "/dashboard/generate-zk-proof" ? "#15A588" : "#717680"}
-        />
-      ),
-    },
-    {
-      title: "Verification Requests",
-      href: "/dashboard/verification-requests",
-      icon: (
-        <NoteFavorite
-          size="20"
-          color={
-            pathname === "/dashboard/verification-requests"
-              ? "#15A588"
-              : "#717680"
-          }
-        />
-      ),
-    },
-    {
-      title: "Settings",
-      href: "/dashboard/settings",
-      icon: (
-        <Setting2
-          size="20"
-          color={pathname === "/dashboard/settings" ? "#15A588" : "#717680"}
-        />
-      ),
-    },
-    {
-      title: "Support",
-      href: "/dashboard/support",
-      icon: (
-        <Messages2
-          size="20"
-          color={pathname === "/dashboard/support" ? "#15A588" : "#717680"}
-        />
-      ),
-    },
-    {
-      title: "Notifications",
-      href: "/dashboard/notifications",
-      icon: (
-        <Notification
-          size="20"
-          color={
-            pathname === "/dashboard/notifications" ? "#15A588" : "#717680"
-          }
-        />
-      ),
-    },
-  ];
+  const routes = useMemo(
+    () => [
+      {
+        title: "Dashboard",
+        href: "/dashboard/overview",
+        icon: Home,
+      },
+      {
+        title: "Upload Documents",
+        href: "/dashboard/data-management",
+        icon: FolderOpen,
+      },
+      {
+        title: "Verification Status",
+        href: "/dashboard/verification-status",
+        icon: Verify,
+      },
+      {
+        title: "Generate ZKP",
+        href: "/dashboard/generate-zk-proof",
+        icon: PieChart,
+      },
+      {
+        title: "Verification Requests",
+        href: "/dashboard/verification-requests",
+        icon: NoteFavorite,
+      },
+      {
+        title: "Settings",
+        href: "/dashboard/settings",
+        icon: Setting2,
+      },
+      {
+        title: "Support",
+        href: "/dashboard/support",
+        icon: Messages2,
+      },
+      {
+        title: "Notifications",
+        href: "/dashboard/notifications",
+        icon: Notification,
+      },
+    ],
+    []
+  );
+
   return (
     <div className="relative h-full">
       <div className="relative h-10 w-[150px] md:w-[197px]">
@@ -131,15 +84,15 @@ function Sidebar() {
         }
       />
       <div className="mt-5 space-y-2">
-        {routes.map((route) => (
+        {routes.map(({ title, href, icon: Icon }) => (
           <div
-            key={route.title}
+            key={title}
             className={`flex items-center gap-4 cursor-pointer hover:bg-primary10 text-border2 px-3 py-2 rounded-lg font-semibold ${
-              pathname === route.href && "!text-primary bg-[#FAFAFA]"
+              pathname === href && "!text-primary bg-[#FAFAFA]"
             }`}
           >
-            {route.icon}
-            <Link href={route.href}>{route.title}</Link>
+            <Icon size={20} color={pathname === href ? "#15A588" : "#717680"} />
+            <Link href={href}>{title}</Link>
           </div>
         ))}
       </div>
@@ -157,6 +110,6 @@ function Sidebar() {
       </div>
     </div>
   );
-}
+};
 
 export default Sidebar;

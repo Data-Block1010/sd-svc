@@ -1,16 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { useMemo, useState } from "react";
 import {
   ColumnDef,
-  ColumnFiltersState,
   SortingState,
   VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
@@ -45,6 +41,7 @@ import {
   useViewDataMutation,
 } from "@/src/hooks/dataManagement/dataManagement";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 
 export type Payment = {
   id: string;
@@ -76,89 +73,78 @@ export function DataTableDemo({
     options?: RefetchOptions
   ) => Promise<QueryObserverResult<any, Error>>;
 }) {
-  const { mutateAsync } = useDeleteDataMutation();
-  const { mutateAsync: updatingAsync } = useUpdateDataMutation();
-
-  const { mutateAsync: viewingAsync } = useViewDataMutation();
-
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-
-  const columns: ColumnDef<DataRecord>[] = [
-    {
-      id: "select",
-      header: ({ table }) => (
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && "indeterminate")
-          }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
-    {
-      accessorKey: "filename",
-      header: "File Name",
-      cell: ({ row }) => (
-        <div className="capitalize flex items-center gap-3">
-          <Image src={file} alt="file" width={30} height={30} />
-          <div
-            className="w-[150px] overflow-hidden"
-            // onClick={() =>
-            //   navigator.clipboard.writeText(row.getValue("filename"))
-            // }
-          >
-            <p className="text-sm text-secondary">{row.getValue("filename")}</p>
-            {/* @ts-ignore */}
-            {/* <p className="text-xs text-secondary/90">{getMB(row.original)} MB</p> */}
-          </div>
-        </div>
-      ),
-    },
-    {
-      accessorKey: "dataHash",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className="pl-0 font-normal text-sm"
-          >
-            Data Hash
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        );
+  const columns = useMemo<ColumnDef<DataRecord>[]>(
+    () => [
+      {
+        id: "select",
+        header: ({ table }) => (
+          <Checkbox
+            checked={
+              table.getIsAllPageRowsSelected() ||
+              (table.getIsSomePageRowsSelected() && "indeterminate")
+            }
+            onCheckedChange={(value) =>
+              table.toggleAllPageRowsSelected(!!value)
+            }
+            aria-label="Select all"
+          />
+        ),
+        cell: ({ row }) => (
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={(value) => row.toggleSelected(!!value)}
+            aria-label="Select row"
+          />
+        ),
+        enableSorting: false,
+        enableHiding: false,
       },
-      cell: ({ row }) => (
-        <div
-          className="text-sm text-secondary w-[150px] overflow-hidden cursor-pointer"
-          onClick={() => {
-            navigator.clipboard.writeText(row.getValue("filename"));
-            toast.success(`Hash Copied`);
-          }}
-        >
-          {String(row.original.encryptedSecret).substring(0, 4) + "xxxxxxxxx"}
-        </div>
-      ),
-    },
-    {
-      accessorKey: "encryptedSecret",
-      header: () => <div className="text-left">Encryption key</div>,
-      cell: ({ row }) => {
-        return (
+      {
+        accessorKey: "filename",
+        header: "File Name",
+        cell: ({ row }) => (
+          <div className="capitalize flex items-center gap-3">
+            <Image src={file} alt="file" width={30} height={30} />
+            <div className="w-[150px] overflow-hidden">
+              <p className="text-sm text-secondary">
+                {row.getValue("filename")}
+              </p>
+            </div>
+          </div>
+        ),
+      },
+      {
+        accessorKey: "dataHash",
+        header: ({ column }) => {
+          return (
+            <Button
+              variant="ghost"
+              onClick={() =>
+                column.toggleSorting(column.getIsSorted() === "asc")
+              }
+              className="pl-0 font-normal text-sm"
+            >
+              Data Hash
+              <CaretSortIcon className="ml-2 h-4 w-4" />
+            </Button>
+          );
+        },
+        cell: ({ row }) => (
+          <div
+            className="text-sm text-secondary w-[150px] overflow-hidden cursor-pointer"
+            onClick={() => {
+              navigator.clipboard.writeText(row.getValue("filename"));
+              toast.success(`Hash Copied`);
+            }}
+          >
+            {String(row.original.encryptedSecret).substring(0, 4) + "xxxxxxxxx"}
+          </div>
+        ),
+      },
+      {
+        accessorKey: "encryptedSecret",
+        header: () => <div className="text-left">Encryption key</div>,
+        cell: ({ row }) => (
           <div
             className="text-sm text-secondary w-[150px] shrink-0 cursor-pointer overflow-hidden"
             onClick={() => {
@@ -168,81 +154,78 @@ export function DataTableDemo({
           >
             {row.original.encryptedSecret}
           </div>
-        );
+        ),
       },
-    },
-    {
-      accessorKey: "createdAt",
-      header: () => <div className="text-left">Date</div>,
-      cell: ({ row }) => {
-        return (
+      {
+        accessorKey: "createdAt",
+        header: () => <div className="text-left">Date</div>,
+        cell: ({ row }) => (
           <div className="text-sm text-secondary">
             {row?.original?.createdAt
               ? new Date(row.original.createdAt).toDateString().slice(0, 16)
               : ""}
           </div>
-        );
+        ),
       },
-    },
-    {
-      id: "actions",
-      enableHiding: false,
-      cell: ({ row }) => {
-        const payment = row.original;
+      {
+        id: "actions",
+        enableHiding: false,
+        cell: ({ row }) => {
+          const payment = row.original;
 
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem className="flex items-center gap-3">
-                <Edit2 size={18} color={"#000"} />{" "}
-                <p className="text-sm">Edit</p>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="flex items-center gap-3"
-                onClick={() => mutateAsync({ cid: payment.dataHash })}
-              >
-                <Trash size={18} color={"#000"} />{" "}
-                <p className="text-sm">Delete</p>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="flex items-center gap-3"
-                onClick={() =>
-                  viewingAsync({
-                    file: payment.filename,
-                    secret: payment.encryptedSecret,
-                  })
-                }
-              >
-                <Eye size={18} /> <p className="text-sm">View details</p>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
+          return (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <span className="sr-only">Open menu</span>
+                  <DotsHorizontalIcon className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem className="flex items-center gap-3">
+                  <Edit2 size={18} color={"#000"} />{" "}
+                  <p className="text-sm">Edit</p>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="flex items-center gap-3"
+                  // onClick={() => mutateAsync({ cid: payment.dataHash })}
+                >
+                  <Trash size={18} color={"#000"} />{" "}
+                  <p className="text-sm">Delete</p>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="flex items-center gap-3"
+                  // onClick={() =>
+                  //   viewingAsync({
+                  //     file: payment.filename,
+                  //     secret: payment.encryptedSecret,
+                  //   })
+                  // }
+                >
+                  <Eye size={18} /> <p className="text-sm">View details</p>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          );
+        },
       },
-    },
-  ];
+    ],
+    []
+  );
+
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
   const table = useReactTable({
     data: userHashes ?? [],
     columns,
     onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
-      columnFilters,
       columnVisibility,
-      rowSelection,
     },
   });
 
