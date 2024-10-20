@@ -46,7 +46,7 @@ export const useDeleteDataMutation = () => {
 
 export const useViewDataMutation = () => {
   return useMutation({
-    mutationFn: (data: { file: File; secret: string }) => {
+    mutationFn: (data: { file: any; secret: string }) => {
       return Service.DataManagementService.viewData(data);
     },
     onSuccess: (data, variables, context) => {
