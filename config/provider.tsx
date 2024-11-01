@@ -5,9 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { Toaster } from "@/src/components/ui/sonner";
-import { useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import * as NProgress from "nprogress";
+import { useEffect } from "react";
 
 export const usePRouter = () => {
   const router = useRouter();
@@ -23,6 +24,7 @@ export const usePRouter = () => {
 };
 
 export default function Provider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const client = new QueryClient({
     defaultOptions: {
       queries: {
@@ -30,6 +32,11 @@ export default function Provider({ children }: { children: React.ReactNode }) {
       },
     },
   });
+  useEffect(() => {
+    if (pathname !== "/waitlist") {
+      redirect("/waitlist");
+    }
+  }, [pathname]);
   return (
     <WagmiProvider config={config}>
       <NextTopLoader
