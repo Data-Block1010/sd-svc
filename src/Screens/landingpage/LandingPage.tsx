@@ -14,7 +14,7 @@ function LandingPage() {
       icon: <Image src="/secure.svg" height={300} width={300} alt="secure" />,
       name: "Ultimate Data Privacy",
       description:
-        "Your data is your own. SecureData uses Zero-Knowledge Proofs to verify your information without exposing it, ensuring maximum privacy.",
+        "Your data is your own. Guard Zero uses Zero-Knowledge Proofs to verify your information without exposing it, ensuring maximum privacy.",
       Button: <a href="">Learn more</a>,
     },
 
@@ -22,7 +22,7 @@ function LandingPage() {
       icon: <Image src="/zaps.svg" height={300} width={300} alt="secure" />,
       name: "Blockchain Security",
       description:
-        "Built on blockchain technology, SecureData ensures that your data is immutable and securely stored, free from unauthorized access.",
+        "Built on blockchain technology, Guard Zero ensures that your data is immutable and securely stored, free from unauthorized access.",
       Button: <a href="">Learn more</a>,
     },
     {
@@ -102,10 +102,10 @@ function LandingPage() {
             <div className="max-w-[95%] mx-auto p-4 sm:p-8">
               <h1 className="text-white text-lg sm:text-xl">Features</h1>
               <h1 className="text-xl sm:text-xl lg:text-4xl text-white font-bold mt-2">
-                Why Choose SecureData?
+                Why Choose Guard Zero?
               </h1>
               <p className="text-white mt-2 w-full sm:w-3/4 md:w-2/3 lg:w-5/12 text-sm sm:text-base">
-                SecureData is designed to handle a wide range of personal and
+                Guard Zero is designed to handle a wide range of personal and
                 professional information securely.
               </p>
             </div>
@@ -427,7 +427,7 @@ function LandingPage() {
 
               {/* Bottom Footer */}
               <div className="mt-8 border-t border-gray-600 pt-4 text-sm text-gray-400 text-center">
-                <p>© 2024 SecureData. All rights reserved.</p>
+                <p>© 2024 Guard Zero. All rights reserved.</p>
                 <div className="flex justify-center space-x-4 mt-2">
                   <Link href="#" className="hover:underline">
                     Terms

@@ -12,6 +12,8 @@ import {
 } from "@/src/components/ui/form";
 import { Input } from "@/src/components/ui/input";
 import { Button } from "@/src/components/ui/button";
+import { useJoinWaitlistMutation } from "@/src/hooks/waitlist";
+import CustomError from "@/src/components/reuseables/CustomError";
 
 const WaitlistScreen = () => {
   return (
@@ -100,6 +102,8 @@ const formSchema = z.object({
 });
 
 function ColumnTwo() {
+  const { mutateAsync, isPending, isError, error } = useJoinWaitlistMutation();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -108,13 +112,15 @@ function ColumnTwo() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-    } catch (err) {
-      // Handle error without reloading the page
-      console.error("Sign up failed:", err);
-    }
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    mutateAsync(values).then(() => {
+      form.reset();
+      form.resetField("email");
+      form.resetField("name");
+    });
   }
+
+  console.log(form.formState.errors);
 
   return (
     <div className="w-11/12 xl:w-6/12 z-50">
@@ -133,8 +139,9 @@ function ColumnTwo() {
           height={40}
           className="mx-auto"
         />
+        <CustomError isError={isError} error={error} />
         <Form {...form}>
-          <form className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
               control={form.control}
               name="name"
@@ -170,9 +177,13 @@ function ColumnTwo() {
                 </FormItem>
               )}
             />
-            <Button className="text-waitlistText bg-[#7F56D9] rounded-full h-[60px] w-full">
-              Join the waitlist
-            </Button>
+            <button
+              type="submit"
+              disabled={isPending}
+              className="text-waitlistText bg-[#7F56D9] disabled:bg-gray-200 disabled:text-gray-900 rounded-full h-[60px] w-full"
+            >
+              {isPending ? "Joining waitlist..." : "Join the waitlist"}
+            </button>
           </form>
         </Form>
       </div>

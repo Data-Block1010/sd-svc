@@ -1,11 +1,9 @@
 import CONFIG from "@/config/config";
-import Service from "@/src/services";
 import axios, { AxiosRequestConfig } from "axios";
 import { toast } from "sonner";
 
 import parseError from "../lib/parseErrorr";
 import { STORAGE_KEY } from "../lib/types/constant";
-import { localhost } from "viem/chains";
 
 export const CLIENT = axios.create({
   baseURL: CONFIG.API_BASE_URL,

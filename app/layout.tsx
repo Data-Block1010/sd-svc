@@ -8,8 +8,8 @@ import Provider from "@/config/provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Secure Data",
-  description: `SecureData DApp offers significant market opportunities across Africa by providing secure and efficient solutions for financial institutions,
+  title: "Guard Zero",
+  description: `Guard Zero DApp offers significant market opportunities across Africa by providing secure and efficient solutions for financial institutions,
                 educational entities, and healthcare providers. 
 
                 The platform enhances KYC processes for financial services, ensures the authenticity of academic credentials in education, and securely manages patient data in healthcare.`,
