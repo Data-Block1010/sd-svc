@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -103,6 +104,7 @@ const formSchema = z.object({
 
 function ColumnTwo() {
   const { mutateAsync, isPending, isError, error } = useJoinWaitlistMutation();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -118,6 +120,7 @@ function ColumnTwo() {
         form.reset();
         form.resetField("email");
         form.resetField("name");
+        router.push("/");
       })
       .catch(() => {
         // Error is already surfaced via isError/error and the toast
