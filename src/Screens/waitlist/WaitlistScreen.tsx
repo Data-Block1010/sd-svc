@@ -113,11 +113,17 @@ function ColumnTwo() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    mutateAsync(values).then(() => {
-      form.reset();
-      form.resetField("email");
-      form.resetField("name");
-    });
+    mutateAsync(values)
+      .then(() => {
+        form.reset();
+        form.resetField("email");
+        form.resetField("name");
+      })
+      .catch(() => {
+        // Error is already surfaced via isError/error and the toast
+        // interceptor in src/services/api.ts; swallow here to avoid an
+        // unhandled promise rejection.
+      });
   }
 
   console.log(form.formState.errors);
