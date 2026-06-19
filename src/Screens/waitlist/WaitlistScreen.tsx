@@ -117,15 +117,14 @@ function ColumnTwo() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     mutateAsync(values)
       .then(() => {
-        form.reset();
-        form.resetField("email");
-        form.resetField("name");
         router.push("/");
+        form.reset();
       })
-      .catch(() => {
+      .catch((err) => {
         // Error is already surfaced via isError/error and the toast
-        // interceptor in src/services/api.ts; swallow here to avoid an
-        // unhandled promise rejection.
+        // interceptor in src/services/api.ts; just log here so failures
+        // are still visible instead of silently swallowed.
+        console.error("Waitlist join failed:", err);
       });
   }
 
