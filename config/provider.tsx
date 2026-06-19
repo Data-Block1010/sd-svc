@@ -33,7 +33,7 @@ export default function Provider({ children }: { children: React.ReactNode }) {
     },
   });
   useEffect(() => {
-    if (pathname !== "/waitlist") {
+    if (pathname !== "/waitlist" && pathname !== "/") {
       redirect("/waitlist");
     }
   }, [pathname]);
