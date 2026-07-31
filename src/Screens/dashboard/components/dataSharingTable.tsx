@@ -34,11 +34,6 @@ import {
 import Image from "next/image";
 import { filePdf, getMB } from "@/src/lib/types/constant";
 import { Edit2, Eye, Trash } from "iconsax-react";
-import { useReadContract } from "wagmi";
-import { config } from "@/config/rainbowKitConfig";
-import { DataStorageContract } from "@/src/lib/contract";
-import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from "wagmi";
-import { abi } from "@/src/contract/DataStorage2.json";
 
 const data: Payment[] = [
   {
@@ -281,17 +276,6 @@ export const columns: ColumnDef<Payment>[] = [
 ];
 
 export function DataTableDemo() {
-  // const { address } = useAccount();
-  // const { data: GetData } = useReadContract({
-  //   abi,
-  //   // @ts-ignore
-  //   address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-  //   functionName: "getData",
-
-  //   args: [address],
-  // });
-
-  // console.log({ GetData, address });
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

@@ -2,7 +2,6 @@
 import { Button } from "@/src/components/ui/button";
 import { useGetUserDataHashes } from "@/src/hooks/userHook/useUser";
 import React from "react";
-import { useAccount } from "wagmi";
 
 import dynamic from "next/dynamic";
 
@@ -17,7 +16,6 @@ const DataTable = dynamic(
 );
 
 function VerificationStatusScreen() {
-  const { address } = useAccount();
   const { data: userHashes, refetch: getHash } = useGetUserDataHashes();
 
   return (
