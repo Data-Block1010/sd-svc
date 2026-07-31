@@ -28,19 +28,23 @@ import {
 } from "@/src/hooks/authentication/auth";
 import CustomError from "@/src/components/reuseables/CustomError";
 
-function LoginScreen() {
+function LoginScreen({
+  defaultTab = "Login",
+}: {
+  defaultTab?: "Login" | "signUp";
+}) {
   return (
     <OnboardingLayout>
-      <TabComp />
+      <TabComp defaultTab={defaultTab} />
     </OnboardingLayout>
   );
 }
 
 export default LoginScreen;
 
-function TabComp() {
+function TabComp({ defaultTab }: { defaultTab: "Login" | "signUp" }) {
   return (
-    <Tabs defaultValue="Login" className="w-[90vw] md:w-[400px]">
+    <Tabs defaultValue={defaultTab} className="w-[90vw] md:w-[400px]">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="signUp">Sign up</TabsTrigger>
         <TabsTrigger value="Login">Log in</TabsTrigger>
