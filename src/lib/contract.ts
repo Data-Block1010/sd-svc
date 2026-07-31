@@ -1,6 +1,7 @@
-import DataStorage from "../contract/DataStorage2.json";
+import { CONTRACT_ID } from "@/config/stellarConfig";
 
+// Soroban equivalent of the old EVM address/ABI pair: just a contract ID,
+// since the interface is defined by the Rust contract, not a JSON ABI.
 export const DataStorageContract = {
-  address: "0x2875d183343FA506d1DE348b377d8e99B563e5f4",
-  abi: DataStorage,
+  contractId: CONTRACT_ID,
 };

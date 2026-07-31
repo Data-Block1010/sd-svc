@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { StellarConnectButton } from "./StellarConnectButton";
 import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
 import { useState } from "react";
@@ -25,7 +25,7 @@ function Nav() {
 				<div className="flex items-center gap-4">
 					{pathname.includes("/dashboard") && (
 						<div className="hidden md:block">
-							<ConnectButton />
+							<StellarConnectButton />
 						</div>
 					)}
 					<div>
@@ -52,7 +52,7 @@ function Nav() {
 			</nav>
 			{pathname.includes("/dashboard") && (
 				<div className="px-2.5 mb-2.5 md:hidden">
-					<ConnectButton />
+					<StellarConnectButton />
 				</div>
 			)}
 		</>

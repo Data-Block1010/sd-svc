@@ -5,7 +5,7 @@ import { uploadedFile } from "@/src/lib/types/dashboard.types";
 import { Trash } from "iconsax-react";
 import { UploadCloud } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { DataTableDemo } from "./dataManagementTable";
 import { useGetSecret } from "@/src/hooks/generateSecret/generateSecret";
@@ -13,75 +13,18 @@ import {
   useDeleteDataMutation,
   useStoreDataMutation,
 } from "@/src/hooks/dataManagement/dataManagement";
-import { useStoreOnBlockchainMutation } from "@/src/hooks/blockchain/useBlockchain";
 import Spinner from "@/src/components/reuseables/Spinner";
-import Web3 from "web3";
 import { useGetUserDataHashes } from "@/src/hooks/userHook/useUser";
-import { useWriteContract } from "wagmi";
-import { abi } from "@/src/contract/DataStorage2.json";
-import { DataStorageContract } from "@/src/lib/contract";
-
-declare global {
-  interface Window {
-    ethereum?: any;
-  }
-}
+import { useStellarWallet } from "@/config/StellarWalletProvider";
+import { storeDataOnChain } from "@/src/lib/sorobanClient";
 
 function DataManagementUpload() {
-  const {
-    writeContract,
-    writeContractAsync,
-    data: storedData,
-    isSuccess,
-    isPending: blocking,
-  } = useWriteContract();
+  const { address } = useStellarWallet();
+  const [blocking, setBlocking] = useState(false);
 
   const { data: userHashes, refetch: getHash } = useGetUserDataHashes();
   const { mutateAsync: deleteData } = useDeleteDataMutation();
   const [isEnabled, setIsEnabled] = useState(false);
-  const [web3, setWeb3] = useState<Web3 | null>(null);
-  const [account, setAccount] = useState<string | null>(null);
-  const {
-    mutateAsync: storeOnBlockAsync,
-    // isPending: blocking,
-    // isError: isBlockError,
-    // error: blockError,
-  } = useStoreOnBlockchainMutation();
-
-  useEffect(() => {
-    const initializeWeb3 = async () => {
-      if (typeof window.ethereum !== "undefined") {
-        try {
-          // Request account access
-          await window.ethereum.request({ method: "eth_requestAccounts" });
-          const web3Instance = new Web3(window.ethereum);
-          setWeb3(web3Instance);
-
-          // Get the current account
-          // const accounts = await web3Instance.eth.getAccounts();
-          // setAccount(accounts[0]);
-
-          // Listen for account changes
-          // window.ethereum.on("accountsChanged", (accounts: string[]) => {
-          //   setAccount(accounts[0]);
-          // });
-        } catch (error) {
-          console.error("Failed to initialize Web3", error);
-        }
-      } else {
-        console.error("MetaMask is not installed.");
-      }
-    };
-
-    initializeWeb3();
-
-    // Cleanup listener on component unmount
-    return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener("accountsChanged", setAccount);
-      }
-    };
-  }, []);
 
   const { refetch, data, isFetching, isError, error, isLoading } =
     useGetSecret(isEnabled);
@@ -101,28 +44,24 @@ function DataManagementUpload() {
 
           // @ts-ignore
           mutateAsync(formData).then((res) => {
-            if (res?.txHash && web3) {
+            if (res?.dataHash && address) {
               console.log(res);
-              writeContractAsync({
-                abi,
-                // @ts-ignore
-                address: DataStorageContract.address,
-                functionName: "storeData",
-                args: [res?.txHash],
-              })
-                .then((res) => {
-                  getHash().then((res) => {
+              setBlocking(true);
+              storeDataOnChain(address, res.dataHash)
+                .then(() => {
+                  getHash().then(() => {
                     setUploadedFiles([]);
                   });
                 })
                 .catch((err) => {
                   console.log(err);
-                  deleteData({ cid: res.dataHash }).then((res) =>
-                    getHash().then((res) => {
+                  deleteData({ cid: res.dataHash }).then(() =>
+                    getHash().then(() => {
                       setUploadedFiles([]);
                     })
                   );
-                });
+                })
+                .finally(() => setBlocking(false));
             }
           });
         }
